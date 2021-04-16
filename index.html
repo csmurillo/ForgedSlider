@@ -15,10 +15,67 @@
        <div class="center-content">
             <div>
                 <h1>Demo</h1>
+                <h1>Slider 1</h1>
                 <div id="slider" class="fs-slider">
+                    <div>slider1 1</div>
+                    <div>slider1 2</div>
+                    <div>slider1 3</div>
+                    <div>slider1 4</div>
+                    <div>slider1 5</div>
+                    <div>slider1 6</div>
+                    <div>slider1 7</div>
+                    <div>slider1 8</div>
+                    <div>slider1 9</div>
+                    <div>slider1 10</div>
                 </div>
+                <button id="left">Left</button>
+                <button id="right">Right</button>
+                <h1>Slider 2</h1>
+                <div id="slider2" class="fs-slider">
+                    <div>slider2 1</div>
+                    <div>slider2 2</div>
+                    <div>slider2 3</div>
+                    <div>slider2 4</div>
+                    <div>slider2 5</div>
+                    <div>slider2 6</div>
+                    <div>slider2 7</div>
+                    <div>slider2 8</div>
+                    <div>slider2 9</div>
+                    <div>slider2 10</div>
+                </div>
+                <button id="left2">Left</button>
+                <button id="right2">Right</button>
+                <h1>Incomplete Slider Functionality</h1>
+                <!-- incomplete slider -->
+                <div id="slider3" class="fs-slider">
+                    <div>slider3 1</div>
+                    <div>slider3 2</div>
+                    <div>slider3 3</div>
+                    <div>slider3 4</div>
+
+                </div>
+                <button id="left3">Left</button>
+                <button id="right3">Right</button>
             </div>
        </div>
     </body>
     <script src="js/forged-slider.js"></script>
+    <script>
+        var slider = document.getElementById('slider');
+        var left = document.getElementById('left');
+        var right = document.getElementById('right');
+        initForgedSlider(slider,{},left,right);
+        var slider2 = document.getElementById('slider2');
+        var left2 = document.getElementById('left2');
+        var right2 = document.getElementById('right2');
+        initForgedSlider(slider2,{},left2,right2);
+        var slider3 = document.getElementById('slider3');
+        var left3 = document.getElementById('left3');
+        var right3 = document.getElementById('right3');
+        initForgedSlider(slider3,{},left3,right3);
+
+
+    </script>
 </html>
+
+<!-- //////////////////////////// -->

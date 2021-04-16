@@ -1,4 +1,20 @@
 .fs-slider{
-    width:600px; height: 120px;
+    width:1000px; height: 120px;
     background-color: rgb(0, 65, 204);
+    position: relative;
+    overflow: hidden;
+}
+.fs-slider-overlay{
+    position: absolute;
+    left:0; top:0;
+}
+.fs-slider-tape{
+    position: relative;
+    left:0;
+    display: flex;
+}
+.fs-items{
+    width:200px; height: 120px;
+    background-color: blueviolet;
+    outline:2px solid red;
 }
