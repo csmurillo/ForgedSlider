@@ -8,10 +8,14 @@
     position: absolute;
     left:0; top:0;
 }
-.fs-slider-tape{
+.fs-slider-tape-horizontal{
     position: relative;
     left:0;
     display: flex;
+}
+.fs-slider-tape-vertical{
+    position: relative;
+    left:0;
 }
 .fs-items{
     width:200px; height: 120px;
