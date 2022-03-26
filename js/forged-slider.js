@@ -5,15 +5,23 @@
 // sliderItemSizeHeight:int
 // moveSlideNitems: int
 function initForgedSlider(slider,options,buttonOne,buttonTwo){
-    const {sliderWidth=1200, sliderHeight=200, sliderItemSizeWidth=200,
-        sliderItemSizeHeight=200, moveSlideNItems=1, direction=''}=options;
+    const {sliderWidth='1200px', sliderHeight=200, sliderItemSizeWidth=200,
+        sliderItemSizeHeight=200, moveSlideNItems=1, direction='',draggable=true}=options;
     const sliderItems=[...slider.children];
 
     // basic slider setup
     setUpForgedSlider(slider,sliderWidth,sliderHeight);
-    setUpForgedSliderItems(sliderItems,sliderItemSizeWidth,sliderItemSizeHeight);
+    console.log(slider.id+'!!!');
+    console.log(document.getElementById(''+slider.id).offsetWidth);
     setUpForgedSliderOverlay(slider);
+    setUpForgedSliderItems(sliderItems,sliderItemSizeWidth,sliderItemSizeHeight);
+    // setUpForgedSliderOverlay(slider);
+    // setUpForgedSliderResponsive(slider);
 
+    // setup draggable
+    if(draggable){
+        setUpForgedSliderDraggable(slider);
+    }
     // setup slider horizontally
     if(direction=='horizontal'){
         setUpForgedSliderTapeHorizontal(slider,sliderItems);
@@ -26,7 +34,7 @@ function initForgedSlider(slider,options,buttonOne,buttonTwo){
     }
 }
 function setUpForgedSlider(slider,width,height){
-    slider.style.width=width+'px';
+    slider.style.width=width;
     slider.style.height=height+'px';
 }
 function setUpForgedSliderItems(sliderItems,sliderItemSizeWidth,sliderItemSizeHeight){
@@ -72,6 +80,7 @@ function setUpForgedSliderTapeVertical(slider,sliderItems){
 function setUpForgedSliderOverlay(slider){
     const fsSliderOverlay = document.createElement("div");
     fsSliderOverlay.className="fs-slider-overlay";
+        console.log('width'+slider.offsetWidth+'!!!');
     fsSliderOverlay.style.width=slider.offsetWidth+'px';
     fsSliderOverlay.style.height=slider.offsetHeight+'px';
     // fsSliderOverlay.style.backgroundColor="black";
@@ -217,4 +226,62 @@ function moveRightForgedSlider(slider,moveSlideNItems){
         console.log('movedleft');
         forgedSliderTape.style.left=fsTapeFutureLeft+"px";
     }
+}
+function setUpForgedSliderDraggable(slider){
+    let draggableState=false;
+    let sliderOverlayWidth=parseInt(slider.children[slider.children.length-1].style.width);
+
+    let sliderTape=null;
+    let sliderTapeLeft=null;
+
+    let sliderOffsetLeft=null;
+    let startXPosition=null;
+
+    slider.addEventListener('mousedown',(e)=>{
+        draggableState=true;
+        sliderTape=e.target.parentElement;
+        sliderTape.style.left=sliderTape.style.left==''?0:sliderTape.style.left;
+        sliderTapeLeft=parseInt(sliderTape.style.left);
+        sliderTapeWidth=parseInt(sliderTape.style.width);
+
+        sliderOffsetLeft=parseInt(e.target.parentElement.parentElement.offsetLeft);
+        startXPosition=e.clientX-sliderOffsetLeft;
+        console.log(sliderOffsetLeft+'overlaywidth'+sliderOverlayWidth);
+    });
+    window.addEventListener('mousemove',(e)=>{
+        if(draggableState){
+            let positionX=(e.clientX-sliderOffsetLeft);
+            // mousemovement right
+            if(positionX>startXPosition){
+                let mousemovementRight=positionX-startXPosition;
+                let newSliderTapeLeft=(sliderTapeLeft+mousemovementRight);
+                if(newSliderTapeLeft>0){
+                    console.log('cant move');
+                }
+                else{
+                    sliderTape.style.left=newSliderTapeLeft+'px';
+                }
+                
+            }
+            // mousemovement left
+            else if(positionX<startXPosition){
+                let mousemovementLeft=startXPosition-positionX;
+                let newSliderTapeLeft=(sliderTapeLeft-mousemovementLeft);
+                let sliderTapeEndpoint=newSliderTapeLeft+sliderTapeWidth;
+                let rightEndPoint=sliderOverlayWidth;
+                if(sliderTapeEndpoint<rightEndPoint){
+                    console.log('cant move');
+                }
+                else{
+                    console.log('Slidertapeleft'+newSliderTapeLeft);
+                    sliderTape.style.left=newSliderTapeLeft+'px';   
+                }
+            }
+        }
+    });
+    window.addEventListener('mouseup',(e)=>{
+        draggableState=false;
+        sliderOffsetLeft=e.target.parentElement.parentElement.offsetLeft;
+        startXPosition=e.clientX-sliderOffsetLeft;
+    });
 }
